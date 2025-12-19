@@ -13,6 +13,12 @@ const routes:Array<RouteRecordRaw> = [
     name: 'authLoginPath',
     component: () => import('@/views/auth/LoginView.vue')
   },
+  //Page Not Found
+  { 
+    path: '/:pathMatch(.*)',
+    name: 'error404Path',
+    component: () => import('@/views/pages/Error404View.vue')
+  }
 ]
 
 export default routes;
