@@ -53,7 +53,7 @@
           <div class="row justify-content-between">
             <div class="col-auto">
               <router-link :to="{name: viewmodel?.getRouteIndex(), params: viewmodel?.getRouteIndexParams() }" class="btn app-btn-secondary">
-                Return
+                Voltar
               </router-link>                
             </div>
           </div>

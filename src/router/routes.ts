@@ -13,6 +13,13 @@ const routes:Array<RouteRecordRaw> = [
     name: 'authLoginPath',
     component: () => import('@/views/auth/LoginView.vue')
   },
+  //Profile
+  {
+    path: '/profile',
+    name: 'profilePath',
+    meta: { requiresAuth: true },
+    component: () => import('@/views/auth/MyProfileView.vue')
+  },
   //Page Not Found
   { 
     path: '/:pathMatch(.*)',
