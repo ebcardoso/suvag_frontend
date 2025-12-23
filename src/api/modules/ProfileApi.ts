@@ -1,4 +1,4 @@
-import { datasource, getConfigs  } from "@/api/ApiClient"
+import { datasource, getConfigs  } from "@/api/ApiClient";
 import type { MyUserResponseDTO } from "@/api/dto/profile/MyUserDTO";
 
 export default {

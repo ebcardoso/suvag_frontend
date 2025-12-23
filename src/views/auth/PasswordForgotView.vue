@@ -1,0 +1,108 @@
+<template>
+  <div class="row g-0 app-auth-wrapper">
+    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+      <div class="d-flex flex-column align-content-end">
+        <div class="app-auth-body mx-auto">
+          <div class="app-auth-branding mb-4">
+            <a class="app-logo" href="index.html">
+              <img class="logo-icon me-2" src="/images/app-logo.svg" alt="logo">
+            </a>
+          </div>
+          <h2 class="auth-heading text-center mb-4">Recuperar Senha</h2>
+          <div class="auth-intro mb-4 text-center">Digite o seu e-mail abaixo, você receberá uma mensagem contendo as instruções para redefinição da senha.</div>
+          <div class="auth-form-container text-left">
+            <div v-for="(alert, index) in alertsStore.alerts" :key="index" :class="['alert', `alert-${alert?.type}`, 'alert-dismissible', 'fade', 'show']" role="alert">
+              <strong>{{alert.title}}</strong> {{alert.message}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form @submit.prevent="resetPassword" class="auth-form resetpass-form">
+              <div class="email mb-3">
+                <label class="sr-only" for="reg-email">E-Mail:</label>
+                <input v-model="email" id="reg-email" name="reg-email" type="email" class="form-control login-email" placeholder="Digite o Seu E-Mail" required>
+              </div>
+              <!--//form-group-->
+              <div class="text-center">
+                <button type="submit" class="btn app-btn-primary btn-block theme-btn mx-auto">
+                  <span v-if="isResetLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Resetar Senha
+                </button>
+              </div>
+            </form>
+            <div class="auth-option text-center pt-5">
+              <router-link :to="{name: 'authLoginPath'}" class="app-link">Login</router-link>
+            </div>
+          </div>
+          <!--//auth-form-container-->
+        </div>
+        <!--//auth-body-->
+        <footer class="app-auth-footer">
+          <div class="container text-center py-3">
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <!-- <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small> -->
+          </div>
+        </footer>
+        <!--//app-auth-footer-->	
+      </div>
+      <!--//flex-column-->   
+    </div>
+    <!--//auth-main-col-->
+    <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
+      <div class="auth-background-holder">
+      </div>
+      <div class="auth-background-mask"></div>
+    </div>
+    <!--//auth-background-col-->
+  </div>
+  <!--//row-->
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import { useAlertsStore } from '@/stores/alertsStore';
+import PasswordForgot from "@/components/auth/PasswordForgot.vue";
+import AuthApi from "@/api/modules/AuthApi";
+import type { ForgotPassowordRequestDTO } from "@/api/dto/auth/ForgotPasswordDTO";
+import type { AlertMessage } from "@/models/AlertMessage";
+
+export default defineComponent({
+  name: 'PasswordForgotView',
+  components: {
+    PasswordForgot
+  },
+  data() {
+    const alertsStore = useAlertsStore();
+    return {
+      alertsStore: alertsStore,
+      isResetLoading: false,
+      email: ''
+    }
+  },
+  mounted() {
+    document.body.classList.add('app-reset-password', 'p-0');
+  },
+  unmounted() {
+    document.body.classList.remove('app-login');
+    document.body.classList.remove('p-0');
+  },
+  methods: {
+    async resetPassword() {
+      this.isResetLoading = true;
+      const requestBody:ForgotPassowordRequestDTO = {
+        email:this.email,
+      }
+      await AuthApi.resetPassword(requestBody).then(response => {
+        this.email = '';
+        this.$router.push({name: 'authLoginPath'});
+      }).catch(a => {
+        let errorAlert:AlertMessage = {
+          type: "danger", //success, warning or danger
+          title: "Erro: ",
+          message: "Falha ao recuperar a senha",
+        }
+        this.alertsStore.createAlert(errorAlert);
+      });
+      this.isResetLoading = false;
+    }
+  },
+});
+</script>

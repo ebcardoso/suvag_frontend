@@ -1,4 +1,5 @@
 import type { AlertMessage } from '@/models/AlertMessage';
+import type { FormGroup } from '@/models/FormGroup';
 import { useAlertsStore } from '@/stores/alertsStore';
 
 interface IViewmodel {
@@ -11,6 +12,7 @@ interface IViewmodel {
   getModalTitle():string,
   getModalButtonText():string,
   canShowFooterOptionsOnShow():boolean,
+  fieldGroups():Array<FormGroup>
 }
 
 export default class BaseViewmodel implements IViewmodel {
@@ -50,6 +52,11 @@ export default class BaseViewmodel implements IViewmodel {
   //Control exhibition of page items
   canShowFooterOptionsOnShow():boolean {
     return true;
+  }
+
+  //Form Groups
+  fieldGroups():Array<FormGroup> {
+    return [];
   }
 
   //Create Alerts

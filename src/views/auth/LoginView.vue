@@ -22,8 +22,8 @@
               </div>
               <!--//form-group-->
               <div class="password mb-3">
-                <label class="sr-only" for="signin-password">Password</label>
-                <input v-model="password" id="signin-password" name="signin-password" type="password" class="form-control signin-password" placeholder="Password" required>
+                <label class="sr-only" for="signin-password">Senha</label>
+                <input v-model="password" id="signin-password" name="signin-password" type="password" class="form-control signin-password" placeholder="Senha" required>
                 <div class="extra mt-3 row justify-content-between">
                   <div class="col-6">
                     <!-- <div class="form-check">
@@ -36,7 +36,7 @@
                   <!--//col-6-->
                   <div class="col-6">
                     <div class="forgot-password text-end">
-                      <router-link :to="{name:'authForgotPasswordPath'}">Forgot password?</router-link>
+                      <router-link :to="{name:'authForgotPasswordPath'}">Esqueci Minha Senha</router-link>
                     </div>
                   </div>
                   <!--//col-6-->
@@ -121,10 +121,10 @@ export default defineComponent({
         this.password='';
         this.accessTokenStore.setToken('-');
 
-        let message:string = ((errors.code == 'ERR_NETWORK') || (errors.response.status >= 500)) ? 'Network error' : 'Wrong user or password';
+        let message:string = ((errors.code == 'ERR_NETWORK') || (errors.response.status >= 500)) ? 'Falha de conexão' : 'Usuário ou senha incorretos';
         this.alertsStore.createAlert({
           type: 'danger', //success, warning or dangers
-          title: 'Failure:',
+          title: 'Erro:',
           message: message
         });
       }).finally(() => {

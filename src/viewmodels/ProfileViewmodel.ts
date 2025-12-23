@@ -1,5 +1,7 @@
 import BaseViewmodel from "@/viewmodels/BaseViewmodel";
 import ProfileApi from "@/api/modules/ProfileApi";
+import type { FormItem } from "@/models/FormItem";
+import type { FormGroup } from "@/models/FormGroup";
 
 export default class ProfileViewmodel extends BaseViewmodel {
   constructor() {
@@ -12,13 +14,13 @@ export default class ProfileViewmodel extends BaseViewmodel {
   }
 
   //Form Fields
-  fieldGroups() {
+  fieldGroups():Array<FormGroup> {
     return [
-      {title: "Meu Perfil", fields: this.fields1()},
+      {title: "Meu Perfil", fields: this.fieldsProfile()}
     ]
   }
 
-  fields1() {
+  fieldsProfile():Array<FormItem> {
     return [
       {
         name: "name",

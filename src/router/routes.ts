@@ -13,6 +13,11 @@ const routes:Array<RouteRecordRaw> = [
     name: 'authLoginPath',
     component: () => import('@/views/auth/LoginView.vue')
   },
+  {
+    path: '/auth/forgot_password',
+    name: 'authForgotPasswordPath',
+    component: () => import('@/views/auth/PasswordForgotView.vue')
+  },
   //Profile
   {
     path: '/profile',
